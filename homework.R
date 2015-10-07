@@ -14,8 +14,17 @@
 
 
 # Problem 8 #
-library(lambda.r)
-pDF(y) %when% {
-  y < 0
-} %as% 0
-pDF(y) %as% exp(-y)
+
+simulated.pDF <- function(y) log(1/((1-y)))
+
+randomDraws <- runif(1E3, min = 0, max = 1)
+
+results.simulated <- sapply(randomDraws, simulated.pDF)
+
+results.simulated.sq = results.simulated^2
+
+results.direct <- rexp(1E3)
+
+
+hist(results.simulated.sq, freq = FALSE, col="green")
+hist(results.direct, freq=FALSE, col="red", add=TRUE)
